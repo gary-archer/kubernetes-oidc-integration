@@ -12,8 +12,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo 'Generating a keypair to use for Kubernetes tokens ...'
+echo 'Generating a token signing keypair ...'
 npm run generate-keypair
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+echo 'Generating internal SSL certificates ...'
+./crypto/create-internal-certs.sh
 if [ $? -ne 0 ]; then
   exit 1
 fi

@@ -1,13 +1,13 @@
 import {randomBytes} from 'crypto';
 import fs from 'fs';
-import {generateKeyPair, exportJWK, exportPKCS8} from 'jose';
+import {generateKeyPair, exportJWK} from 'jose';
 
 if (fs.existsSync('private.key')) {
-    console.log('Keys have already been generated')
-    process.exit(1);
+    console.log('Token signing keys have already been generated')
+    process.exit(0);
 }
 
-console.log('Generating the mock authorization server keypair ...');
+console.log('Generating the token signing keypair ...');
 const algorithm = 'ES256';
 const kid = randomBytes(16).toString('hex');
 var keypair = await generateKeyPair(algorithm);
@@ -25,3 +25,4 @@ privateKey.alg = algorithm;
  */
 fs.writeFileSync('./public.key', JSON.stringify(publicKey, null, 2));
 fs.writeFileSync('./private.key', JSON.stringify(privateKey, null ,2));
+console.log('Token signing keypair generated successfully');

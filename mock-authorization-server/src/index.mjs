@@ -2,7 +2,7 @@ import express from 'express';
 import fs from 'fs';
 
 if (!fs.existsSync('public.key')) {
-    console.log('Generate keys before running the JWKS URI');
+    console.log('Generate keys before running the authorization server');
     process.exit(1);
 }
 

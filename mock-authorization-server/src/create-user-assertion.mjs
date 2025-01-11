@@ -33,5 +33,5 @@ const userAssertion = await new SignJWT({
     .setExpirationTime(expiryTime)
     .sign(privateKey);
 
-console.log(`Token issued for Kubernetes user ${userID}`);
+console.log(`The mock authorization server issued a user assertion for Kubernetes user ${userID}`);
 console.log(userAssertion);

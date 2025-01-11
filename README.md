@@ -1,18 +1,18 @@
-# Authenticate Users in Kubernetes with OpenID Connect
+# Authenticate Kubernetes Users with OpenID Connect
 
 Kubernetes supports user authentication with [OpenID Connect ID Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
-This enables various use cases, where you control permissions assigned to each user:
+This enables various use cases, where you restrict team Kubernetes permissions by user type:
 
-- Running the `kubectl` tool as a particular user.
-- Logging into the [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) as a particular user.
+- Locking down access to the `kubectl` tool.
+- Locking down access to the [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/).
 
 ## Tokens and User Permissions
 
 Kubernetes user level access typically represents employees that you organize into groups.\
-Each group can be assigned different Kubernetes permissions using role based access control.
+Each group can be assigned restricted Kubernetes permissions using role based access control.
 
 Your authorization server can issue ID tokens that Kubernetes treats as user assertions to authenticate users.\
-Kubernetes allows you to map a claim from the ID token to a Kubernetes group:
+Kubernetes allows you to map an ID token claim like `employee_groups` to a Kubernetes role:
 
 ```json
 {
@@ -29,8 +29,8 @@ Kubernetes allows you to map a claim from the ID token to a Kubernetes group:
 
 The Kubernetes API server requires calls these authorization server endpoints to validate ID tokens:
 
-- Provide an OpenID Connect discovery endpoint.
-- Provide a JWKS URI with the token signing public keys.
+- An OpenID Connect discovery endpoint that uses TLS.
+- A JWKS URI with the token signing public keys.
 
 ## Productive Integrations
 
@@ -43,7 +43,7 @@ To do so you can use the techniques from [Testing Zero Trust APIs](https://curit
 
 ## Testing the Flow
 
-This GitHub repo contains a mock authorization server that you can use to test the flow.
+This GitHub repo provides a mock authorization server that you can use to get integrated.
 
 ### Prerequisites
 
@@ -69,20 +69,13 @@ The default configuration at `~/.kube/config` runs as user `kubernetes-admin` wi
 kubectl get pod -A
 ```
 
-### Build the Mock Authorization Server
+### Deploy the Mock Authorization Server
 
-Test mock authorization server operations locally and then build a Docker container:
+Build and deploy the mock authorization server as a Docker container.\
+If required, run the authorization server locally to understand its code and operations.
 
 ```bash
 ./mock-authorization-server/build.sh
-./build.sh
-```
-
-### Deploy the Mock Authorization Server
-
-Deploy the mock authorization server to the cluster:
-
-```bash
 ./mock-authorization-server/deploy.sh
 ```
 
@@ -95,9 +88,18 @@ cd mock-authorization-server
 npm run create-user-assertion
 ```
 
-### Create a KubeConfig File from the ID Token
+### Run Kubernetes Commands with Restricted Privileges
 
-TODO
+TODO:
+
+- Create a `~/.kube/config` file from an ID token
+- Create a role and role binding for `developers` and `devops` groups
+- Use kubectl as both users
+
+FIRST:
+
+- Deployment needs an environment variable for INTERNAL_BASE_URL
+- Mock authorization server needs to load SSL certs
 
 ### Free Resources
 
