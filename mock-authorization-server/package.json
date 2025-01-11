@@ -1,0 +1,20 @@
+{
+    "name": "mock-authorization-server",
+    "version": "1.0.0",
+    "description": "Simulate an authorization server's OAuth and OpenID Connect operations",
+    "author": "Curity",
+    "license": "Apache-2.0",
+    "type": "module",
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "generate-keypair": "node src/generate-keypair.mjs",
+        "start": "node src/index.mjs",
+        "create-user-assertion": "node src/create-user-assertion.mjs"
+    },
+    "dependencies": {
+        "express": "^5.0.1",
+        "jose": "^5.9.6"
+    }
+}

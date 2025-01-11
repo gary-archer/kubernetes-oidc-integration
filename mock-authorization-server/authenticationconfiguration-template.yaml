@@ -1,0 +1,12 @@
+############################################################################################################
+# Authentication configuration from a file requires Kubernetes 1.30+
+# https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration
+############################################################################################################
+apiVersion: apiserver.config.k8s.io/v1beta1
+kind: AuthenticationConfiguration
+jwt:
+- issuer:
+    url: https://login.test.example
+    certificateAuthority: $ENCODED_CERT
+    audiences:
+    - my-client
