@@ -57,7 +57,7 @@ First ensure that these tools are installed:
 
 ### Create a Local Cluster
 
-Create a KIND cluster :
+Create a KIND cluster:
 
 ```bash
 kind create cluster --name=demo
@@ -96,11 +96,11 @@ TODO:
 - Create a role and role binding for `developers` and `devops` groups
 - Use kubectl as both users
 
-FIRST:
+Strggling with:
 
-- Deployment needs an environment variable for INTERNAL_BASE_URL
-- Mock authorization server needs to load SSL certs
-- Book Ingrebourne and check out logistics
+- Cluster startup with the new authentication-config parameter
+- https://github.com/gardener/gardener/issues/9858
+- Get it working first without the certificateAuthority
 
 ### Free Resources
 

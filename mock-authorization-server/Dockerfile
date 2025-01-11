@@ -1,11 +1,11 @@
 FROM node:20-bookworm-slim
 
 WORKDIR /usr/authorizationserver
-COPY src/index.mjs                      /usr/authorizationserver
-COPY package*.json                      /usr/authorizationserver
-COPY crypto/token-signing-public.jwk   /usr/authorizationserver
-COPY crypto/internal-ssl.key           /usr/authorizationserver
-COPY crypto/internal-ssl.crt           /usr/authorizationserver
+COPY src/index.mjs                      /usr/authorizationserver/
+COPY package*.json                      /usr/authorizationserver/
+COPY crypto/token-signing-public.jwk   /usr/authorizationserver/crypto/
+COPY crypto/internal-ssl.key           /usr/authorizationserver/crypto/
+COPY crypto/internal-ssl.crt           /usr/authorizationserver/crypto/
 
 RUN npm install
 

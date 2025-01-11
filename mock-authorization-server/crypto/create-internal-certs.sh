@@ -17,6 +17,7 @@ openssl ecparam -name prime256v1 -genkey -noout -out internal-ca.key
 if [ $? -ne 0 ]; then
   exit 1
 fi
+chmod 644 internal-ca.key
 
 openssl req \
     -x509 \
@@ -34,6 +35,7 @@ openssl ecparam -name prime256v1 -genkey -noout -out internal-ssl.key
 if [ $? -ne 0 ]; then
   exit 1
 fi
+chmod 644 internal-ssl.key
 
 openssl req \
     -x509 \

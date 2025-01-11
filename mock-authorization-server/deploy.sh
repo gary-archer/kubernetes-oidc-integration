@@ -7,9 +7,9 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# Set the runtime root CA as a single YAML line
+# Configure the root CA that the Kubernetes API server must trust
 #
-export INTERNAL_CA_CERT="$(openssl base64 -in ./crypto/internal-ca.crt | tr -d '\n')"
+export INTERNAL_CA_CERT="$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ./crypto/internal-ca.crt)"
 envsubst '$INTERNAL_CA_CERT' < authenticationconfiguration-template.yaml > authenticationconfiguration.yaml
 if [ $? -ne 0 ]; then
   exit 1
@@ -27,9 +27,7 @@ fi
 #
 # Apply the authentication configuration as a global resource
 #
-kubectl create namespace identity 2>/dev/null
 kubectl apply -f authenticationconfiguration.yaml
 if [ $? -ne 0 ]; then
   exit 1
 fi
-

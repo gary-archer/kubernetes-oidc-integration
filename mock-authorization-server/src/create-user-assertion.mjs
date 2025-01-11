@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {importJWK, SignJWT} from 'jose';
 
-if (!fs.existsSync('./public.jwk')) {
+if (!fs.existsSync('crypto/token-signing-public.jwk')) {
     console.log('Generate keys before issuing an ID token');
     process.exit(1);
 }

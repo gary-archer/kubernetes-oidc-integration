@@ -8,6 +8,6 @@ jwt:
 - issuer:
     url: https://login.test.example
     discoveryURL: https://mockauthorizationserver.identity.svc/.well-known/openid-configuration
-    certificateAuthority: $ENCODED_CERT
+    #certificateAuthority: $INTERNAL_CA_CERT
     audiences:
     - my-client

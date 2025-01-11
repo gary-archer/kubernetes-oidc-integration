@@ -38,5 +38,5 @@ fi
 
 #
 # If required, test the mock authorization server locally
-# docker run -it -e BASE_URL='https://login.test.example' -p 3000:3000 mockauthorizationserver:1.0
+# docker run -it -p 3000:3000 mockauthorizationserver:1.0
 #

@@ -20,9 +20,6 @@ publicKey.alg = algorithm;
 privateKey.kid = kid;
 privateKey.alg = algorithm;
 
-/*
- * This example exports the private key in an unprotected format to simplify code
- */
-fs.writeFileSync('./public.key', JSON.stringify(publicKey, null, 2));
-fs.writeFileSync('./private.key', JSON.stringify(privateKey, null ,2));
+fs.writeFileSync('./crypto/token-signing-public.jwk', JSON.stringify(publicKey, null, 2));
+fs.writeFileSync('./crypto/token-signing-private.jwk', JSON.stringify(privateKey, null ,2));
 console.log('Token signing keypair generated successfully');
