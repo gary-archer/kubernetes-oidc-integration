@@ -1,4 +1,4 @@
-# Authenticate Kubernetes Users with OpenID Connect
+# Manage Kubernetes Users with OpenID Connect
 
 Kubernetes supports user authentication with [OpenID Connect ID Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
 This enables various use cases, where you restrict team Kubernetes permissions by user type:
@@ -100,6 +100,7 @@ FIRST:
 
 - Deployment needs an environment variable for INTERNAL_BASE_URL
 - Mock authorization server needs to load SSL certs
+- Book Ingrebourne and check out logistics
 
 ### Free Resources
 
