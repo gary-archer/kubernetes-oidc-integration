@@ -15,7 +15,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Deploy the service and a test client
+# Deploy the authorization server and a test client
 #
 ./mock-authorization-server/deploy.sh
 if [ $? -ne 0 ]; then

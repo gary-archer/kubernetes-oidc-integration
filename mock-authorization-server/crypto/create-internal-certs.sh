@@ -48,7 +48,7 @@ openssl req \
     -days 365 \
     -addext 'basicConstraints=critical,CA:FALSE' \
     -addext 'extendedKeyUsage=serverAuth' \
-    -addext "subjectAltName=DNS:mockauthorizationserver.service.svc"
+    -addext "subjectAltName=DNS:mockauthorizationserver.identity.svc"
 if [ $? -ne 0 ]; then
   exit 1
 fi

@@ -20,7 +20,7 @@ const privateKey = await importJWK(privateJwk, publicJwk.alg);
  */
 const issuerID = 'https://login.test.example';
 const audience = 'my-client';
-const expiryTime = Date.now() / 1000 + (15 * 60 * 1000);
+const expiryTimeSeconds = Date.now() + (15 * 60 * 1000);
 
 /*
  * Set values based on 
@@ -39,7 +39,7 @@ const userAssertion = await new SignJWT({
 })
     .setProtectedHeader( {kid: publicJwk.kid, alg: publicJwk.alg} )
     .setIssuedAt(Date.now() - 30000)
-    .setExpirationTime(expiryTime)
+    .setExpirationTime(expiryTimeSeconds)
     .sign(privateKey);
 
 console.log(decodeJwt(userAssertion));

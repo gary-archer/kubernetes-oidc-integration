@@ -88,8 +88,8 @@ Verify internal SSL by calling the OpenID Connect endpoints:
 
 ```bash
 export CURL_CA_BUNDLE=/etc/internal-ca.crt
-curl https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
-curl https://mockauthorizationserver.service.svc:8443/jwks
+curl https://mockauthorizationserver.identity.svc:8443/.well-known/openid-configuration
+curl https://mockauthorizationserver.identity.svc:8443/jwks
 ```
 
 ### 3. Get a User Assertion
@@ -106,7 +106,7 @@ Whenever required, quickly get a user level ID token for an employee role using 
 Install the Kubernetes dashboard:
 
 ```bash
-4-deploy-dashboard.sh
+./4-deploy-dashboard.sh
 ```
 
 Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.\

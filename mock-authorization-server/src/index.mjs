@@ -12,7 +12,7 @@ if (!fs.existsSync('crypto/internal-ssl.key')) {
 }
 
 const port = 8443;
-const baseUrl = `https://mockauthorizationserver.service.svc:${port}`;
+const baseUrl = `https://mockauthorizationserver.identity.svc:${port}`;
 const app = express();
 
 const publicKey = JSON.parse(fs.readFileSync('./crypto/token-signing-public.jwk', 'ascii'));
@@ -23,7 +23,7 @@ const jwksData = {
 };
 
 const discoveryData = {
-    issuer: baseUrl,
+    issuer: 'https://login.test.example',
     jwks_uri: `${baseUrl}/jwks`,
 };
 
