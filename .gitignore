@@ -1,5 +1,6 @@
 *.jwk
 *.key
 *.crt
+download
 node_modules
 authenticationconfiguration.yaml
