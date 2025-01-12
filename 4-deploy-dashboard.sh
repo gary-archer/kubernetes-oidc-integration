@@ -7,7 +7,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# Apply role based access control rules
+# Apply cluster role based access control rules
 #
 kubectl apply -f resources/rbac.yaml
 
@@ -29,4 +29,4 @@ fi
 # Run the dashboard front end
 #
 echo 'Exposing the Kubernetes dashboard using port forwarding'
-#kubectl -n dashboard port-forward kubernetes-dashboard 9090
+kubectl -n dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443

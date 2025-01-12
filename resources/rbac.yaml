@@ -26,7 +26,7 @@ roleRef:
   name: devops-role
 subjects:
 - kind: Group
-  name: jane.doe
+  name: devops
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -38,4 +38,4 @@ roleRef:
   name: developer-role
 subjects:
 - kind: Group
-  name: john.doe
+  name: developers

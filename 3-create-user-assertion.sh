@@ -7,4 +7,4 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 cd mock-authorization-server
-npm run create-user-assertion
+npm run create-user-assertion $1

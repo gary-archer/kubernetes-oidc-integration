@@ -11,3 +11,12 @@ spec:
     image: curlimages/curl:latest
     command: ["sleep"]
     args: ["infinity"]
+    volumeMounts:
+    - name: rootca
+      mountPath: /etc/internal-ca.crt
+      subPath: internal-ca.crt
+      readOnly: true
+  volumes:
+  - name: rootca
+    configMap:
+      name: rootca-configmap

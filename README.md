@@ -87,24 +87,36 @@ kubectl -n client exec -it curl -- sh
 Verify internal SSL by calling the OpenID Connect endpoints:
 
 ```bash
-curl -k https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
-curl -k https://mockauthorizationserver.service.svc:8443/jwks
+export CURL_CA_BUNDLE=/etc/internal-ca.crt
+curl /etc/internal-ca-cret /etc https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
+curl https://mockauthorizationserver.service.svc:8443/jwks
 ```
 
 ### 3. Get a User Assertion
 
-Then get a user level ID token to use with the kubectl tool:
+Whenever required, quickly get a user level ID token for an employee role using one of these commands:
 
 ```bash
-./3-create-user-assertion.sh
+./3-create-user-assertion.sh 'developer'
+./3-create-user-assertion.sh 'devops'
 ```
 
-### 4. Free Resources
+### 4. Run the Kubernetes Dashboard
+
+Install the Kubernetes dashboard:
+
+```bash
+4-deploy-dashboard.sh
+```
+
+Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.
+
+### 5. Free Resources
 
 When you have finished testing, free resources with this command:
 
 ```bash
-./4-delete-cluster.sh
+./5-delete-cluster.sh
 ```
 
 ### Run Kubernetes Commands with Restricted Privileges

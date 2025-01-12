@@ -6,6 +6,8 @@ if (!fs.existsSync('crypto/token-signing-public.jwk')) {
     process.exit(1);
 }
 
+const group = process.argv.length > 2 && process.argv[2] === 'devops' ? 'devops' : 'developers';
+
 /*
  * Load crypto keys
  */
@@ -14,13 +16,17 @@ const privateJwk = JSON.parse(fs.readFileSync('./crypto/token-signing-private.jw
 const privateKey = await importJWK(privateJwk, publicJwk.alg);
 
 /*
- * Test Kubernetes authentication as various users by editing these values
+ * Set properties that the API server trusts
  */
-const userID = 'john.doe';
 const issuerID = 'https://login.test.example';
 const audience = 'my-client';
 const expiryTime = Date.now() / 1000 + (15 * 60 * 1000);
-const employeeGroups = ['developers'];
+
+/*
+ * Set values based on 
+ */
+const userID = group === 'developers' ? 'john.doe' : 'jane.doe';
+const employeeGroups = [group];
 
 /*
  * Create a user JWT assertion for authentication with the Kubernetes API server
