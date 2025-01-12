@@ -2,7 +2,7 @@ import {randomBytes} from 'crypto';
 import fs from 'fs';
 import {generateKeyPair, exportJWK} from 'jose';
 
-if (fs.existsSync('./crypto/token-signing-private.jwk')) {
+if (fs.existsSync('token-signing-keys/private.jwk')) {
     console.log('Token signing keys have already been generated')
     process.exit(0);
 }
@@ -18,6 +18,6 @@ const privateKey = await exportJWK(keypair.privateKey);
 publicKey.kid = kid;
 publicKey.alg = algorithm;
 
-fs.writeFileSync('./crypto/token-signing-public.jwk', JSON.stringify(publicKey, null, 2));
-fs.writeFileSync('./crypto/token-signing-private.jwk', JSON.stringify(privateKey, null ,2));
+fs.writeFileSync('token-signing-keys/public.jwk', JSON.stringify(publicKey, null, 2));
+fs.writeFileSync('token-signing-keys/private.jwk', JSON.stringify(privateKey, null ,2));
 console.log('Token signing keypair generated successfully');

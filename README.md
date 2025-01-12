@@ -69,13 +69,43 @@ The default configuration at `~/.kube/config` runs as user `kubernetes-admin` wi
 kubectl get pod -A
 ```
 
-### 2. Deploy the Mock Authorization Server
+### 2. Prepare External Load Balancers
+
+Run the load balancer provider to enable external networking connectivity:
+
+```bash
+./2-run-load-balancer-provider.sh
+```
+
+### 3. Deploy the API Gateway
+
+Deploy an API gateway to enable external HTTPS URLs that the Kubernetes API server requires:
+
+```bash
+./3-deploy-api-gateway.sh
+```
+
+Add the reported external IP address to the host computer's `/etc/hosts` file similar to the following:
+
+```bash
+172.30.0.4 login.test.example dashboard.test.example
+```
+
+### 4. Deploy the Mock Authorization Server
 
 Build and deploy the mock authorization server as a Docker container.\
 If required, run the authorization server locally to understand its code and operations.
 
 ```bash
-./2-deploy-authorization-server.sh
+./4-deploy-authorization-server.sh
+```
+
+Then call external URLs:
+
+```bash
+export CURL_CA_BUNDLE=resources/external-certificates/external-ca.crt
+curl https://login.test.example/.well-known/openid-configuration
+curl https://login.test.example/jwks
 ```
 
 Then connect to the a utility pod that can act as an OAuth client:
@@ -84,29 +114,19 @@ Then connect to the a utility pod that can act as an OAuth client:
 kubectl -n applications exec -it curl -- sh
 ```
 
-Verify internal SSL by calling the OpenID Connect endpoints:
+Also call internal URLs:
 
 ```bash
-export CURL_CA_BUNDLE=/etc/internal-ca.crt
-curl https://mockauthorizationserver.identity.svc:8443/.well-known/openid-configuration
-curl https://mockauthorizationserver.identity.svc:8443/jwks
+curl http://mockauthorizationserver.identity.svc:8443/.well-known/openid-configuration
+curl http://mockauthorizationserver.identity.svc:8443/jwks
 ```
 
-### 3. Get a User Assertion
-
-Whenever required, quickly get a user level ID token for an employee role using one of these commands:
-
-```bash
-./3-create-user-assertion.sh 'developer'
-./3-create-user-assertion.sh 'devops'
-```
-
-### 4. Run the Kubernetes Dashboard
+### 5. Deploy the Kubernetes Dashboard
 
 Install the Kubernetes dashboard:
 
 ```bash
-./4-deploy-dashboard.sh
+./5-deploy-dashboard.sh
 ```
 
 Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.\
@@ -114,6 +134,15 @@ If the JWT is rejected, use the following command to debug:
 
 ```bash
 kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
+```
+
+### 3. Get a User Assertion
+
+Whenever required, quickly get a user level ID token for an employee role using one of these commands:
+
+```bash
+./6-create-user-assertion.sh 'developer'
+./6-create-user-assertion.sh 'devops'
 ```
 
 ### Use Kubectl as a User

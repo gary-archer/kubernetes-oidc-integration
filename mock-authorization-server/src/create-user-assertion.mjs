@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {decodeJwt, importJWK, SignJWT} from 'jose';
 
-if (!fs.existsSync('crypto/token-signing-public.jwk')) {
+if (!fs.existsSync('token-signing-keys/public.jwk')) {
     console.log('Generate keys before issuing a user assertion');
     process.exit(1);
 }
@@ -11,8 +11,8 @@ const group = process.argv.length > 2 && process.argv[2] === 'devops' ? 'devops'
 /*
  * Load crypto keys
  */
-const publicJwk = JSON.parse(fs.readFileSync('./crypto/token-signing-public.jwk', 'ascii'));
-const privateJwk = JSON.parse(fs.readFileSync('./crypto/token-signing-private.jwk', 'ascii'));
+const publicJwk = JSON.parse(fs.readFileSync('token-signing-keys/public.jwk', 'ascii'));
+const privateJwk = JSON.parse(fs.readFileSync('token-signing-keys/private.jwk', 'ascii'));
 const privateKey = await importJWK(privateJwk, publicJwk.alg);
 
 /*

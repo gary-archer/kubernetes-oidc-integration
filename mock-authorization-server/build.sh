@@ -18,12 +18,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo 'Generating internal SSL certificates ...'
-./crypto/create-internal-certs.sh
-if [ $? -ne 0 ]; then
-  exit 1
-fi
-
 echo 'Building the mock authorization server into a Docker image ...'
 docker build -t mockauthorizationserver:1.0 .
 if [ $? -ne 0 ]; then
@@ -37,6 +31,6 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# If required, test the mock authorization server locally
+# If required, test the mock authorization server locally at a base URL of http://localhost:8443
 # docker run -it -p 8443:8443 mockauthorizationserver:1.0
 #

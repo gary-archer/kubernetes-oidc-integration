@@ -1,6 +1,6 @@
-######################################################
-# The client is a simple pod from which I can run curl
-######################################################
+#############################################################
+# The client is a simple pod from which curl commands are run
+#############################################################
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,12 +11,3 @@ spec:
     image: curlimages/curl:latest
     command: ["sleep"]
     args: ["infinity"]
-    volumeMounts:
-    - name: rootca
-      mountPath: /etc/internal-ca.crt
-      subPath: internal-ca.crt
-      readOnly: true
-  volumes:
-  - name: rootca
-    configMap:
-      name: rootca-configmap

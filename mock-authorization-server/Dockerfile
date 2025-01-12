@@ -1,12 +1,9 @@
 FROM node:20-bookworm-slim
 
 WORKDIR /usr/authorizationserver
-COPY src/index.mjs                      /usr/authorizationserver/
-COPY package*.json                      /usr/authorizationserver/
-COPY crypto/token-signing-public.jwk   /usr/authorizationserver/crypto/
-COPY crypto/internal-ssl.key           /usr/authorizationserver/crypto/
-COPY crypto/internal-ssl.crt           /usr/authorizationserver/crypto/
-
+COPY src/index.mjs                   /usr/authorizationserver/
+COPY token-signing-keys/public.jwk   /usr/authorizationserver/token-signing-keys/
+COPY package*.json                   /usr/authorizationserver/
 RUN npm install
 
 RUN groupadd --gid 10000 authorizationserver \

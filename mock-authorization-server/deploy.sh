@@ -16,19 +16,10 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create a configmap for the root CA
+# Deploy a curl client to test internal connections
 #
 kubectl create namespace applications 2>/dev/null
-kubectl -n applications create configmap rootca-configmap --from-file=crypto/internal-ca.crt
-if [ $? -ne 0 ]; then
-  exit 1
-fi
-
-#
-# Deploy a curl client to verify the connection
-#
 kubectl -n applications apply -f ../resources/client.yaml
 if [ $? -ne 0 ]; then
   exit 1
 fi
-

@@ -7,26 +7,21 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# First create authorization server certificates
+# First create API gateway certificates that the authorization server uses
 #
-./mock-authorization-server/crypto/create-internal-certs.sh
+./resources/external-certificates/create.sh
 if [ $? -ne 0 ]; then
   exit 1
 fi
 
 #
-# Then create the authentication configuration that references the authorization server root CA
+# Then create the authentication configuration that references the root CA
 #
-export INTERNAL_CA_CERT="$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ./mock-authorization-server/crypto/internal-ca.crt)"
+export INTERNAL_CA_CERT="$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ./resources/external-certificates/external-ca.crt)"
 envsubst '$INTERNAL_CA_CERT' < resources/authenticationconfiguration-template.yaml > resources/authenticationconfiguration.yaml
 if [ $? -ne 0 ]; then
   exit 1
 fi
 
-#
-# Next create a cluster that references the authentication configuration
-#
+
 kind create cluster --name=demo --config=resources/cluster.yaml
-if [ $? -ne 0 ]; then
-  exit 1
-fi
