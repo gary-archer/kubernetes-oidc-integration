@@ -78,17 +78,17 @@ If required, run the authorization server locally to understand its code and ope
 ./2-deploy-authorization-server.sh
 ```
 
-Then connect to the client pod:
+Then connect to the a utility pod that can act as an OAuth client:
 
 ```bash
-kubectl -n client exec -it curl -- sh
+kubectl -n applications exec -it curl -- sh
 ```
 
 Verify internal SSL by calling the OpenID Connect endpoints:
 
 ```bash
 export CURL_CA_BUNDLE=/etc/internal-ca.crt
-curl /etc/internal-ca-cret /etc https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
+curl https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
 curl https://mockauthorizationserver.service.svc:8443/jwks
 ```
 
@@ -109,7 +109,19 @@ Install the Kubernetes dashboard:
 4-deploy-dashboard.sh
 ```
 
-Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.
+Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.\
+If the JWT is rejected, use the following command to debug:
+
+```bash
+kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
+```
+
+### Use Kubectl as a User
+
+TODO: 
+
+- Create a `~/.kube/config` file from an ID token and run kubectl.
+- Limit developers to a single namespace.
 
 ### 5. Free Resources
 
@@ -118,17 +130,3 @@ When you have finished testing, free resources with this command:
 ```bash
 ./5-delete-cluster.sh
 ```
-
-### Run Kubernetes Commands with Restricted Privileges
-
-TODO:
-
-- Create a `~/.kube/config` file from an ID token
-- Create a role and role binding for `developers` and `devops` groups
-- Use kubectl as both users
-
-Strggling with:
-
-- Cluster startup with the new authentication-config parameter
-- https://github.com/gardener/gardener/issues/9858
-- Get it working first without the certificateAuthority

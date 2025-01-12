@@ -18,8 +18,8 @@ fi
 #
 # Create a configmap for the root CA
 #
-kubectl create namespace client 2>/dev/null
-kubectl -n client create configmap rootca-configmap --from-file=crypto/internal-ca.crt
+kubectl create namespace applications 2>/dev/null
+kubectl -n applications create configmap rootca-configmap --from-file=crypto/internal-ca.crt
 if [ $? -ne 0 ]; then
   exit 1
 fi
@@ -27,7 +27,7 @@ fi
 #
 # Deploy a curl client to verify the connection
 #
-kubectl -n client apply -f kubernetes/client.yaml
+kubectl -n applications apply -f kubernetes/client.yaml
 if [ $? -ne 0 ]; then
   exit 1
 fi
