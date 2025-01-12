@@ -4,13 +4,20 @@ nodes:
 - role: control-plane
   extraMounts:
   - hostPath: ./authenticationconfiguration.yaml
-    containerPath: /etc/kubernetes/authenticationconfiguration.yaml
+    containerPath: /init/authenticationconfiguration.yaml
 
   kubeadmConfigPatches:
   - |
     kind: ClusterConfiguration
     apiServer:
       extraArgs:
-        authentication-config: /etc/kubernetes/authenticationconfiguration.yaml
+        authentication-config: /init/authenticationconfiguration.yaml
+      extraVolumes:
+      - name: authenticationconfiguration
+        hostPath: /init/authenticationconfiguration.yaml
+        mountPath: /init/authenticationconfiguration.yaml
+        readOnly: false
+        pathType: File
 
+- role: worker
 - role: worker

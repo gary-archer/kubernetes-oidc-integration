@@ -7,7 +7,14 @@ kind: AuthenticationConfiguration
 jwt:
 - issuer:
     url: https://login.test.example
-    discoveryURL: https://mockauthorizationserver.identity.svc/.well-known/openid-configuration
-    #certificateAuthority: $INTERNAL_CA_CERT
+    #discoveryURL: https://mockauthorizationserver.identity.svc/.well-known/openid-configuration
+    #certificateAuthority: -----BEGIN CERTIFICATE-----\nMIIBmDCCAT+gAwIBAgIUFaGmUgPJbO1/X47S2w0kDAa03UcwCgYIKoZIzj0EAwIw\nIjEgMB4GA1UEAwwXSW50ZXJuYWwgRGV2ZWxvcG1lbnQgQ0EwHhcNMjUwMTEyMTAw\nMDM5WhcNMzUwMTEwMTAwMDM5WjAiMSAwHgYDVQQDDBdJbnRlcm5hbCBEZXZlbG9w\nbWVudCBDQTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABKZdR+UuEVcxxd7CxNNJ\nhrXlVXkW8li/fel3w/ovluqTTynEusm5A8iSEoNbvPnFrn+/MdIfM/IoOKtjJRai\nouqjUzBRMB0GA1UdDgQWBBSh3ZRVVrVGUfm7Nc4HirRIvsyLqDAfBgNVHSMEGDAW\ngBSh3ZRVVrVGUfm7Nc4HirRIvsyLqDAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49\nBAMCA0cAMEQCIBa3/g1Xv4YnJ/Se3pRPi4FSmp6Bczeqpfs+fUWR0NzXAiA9yPiR\nfip31EJXOss+Nl4H6e5AYWqG8Sj5KrCKbJ+0UQ==\n-----END CERTIFICATE-----\n
     audiences:
     - my-client
+  claimMappings:
+    username:
+      claim: sub
+      prefix: ''
+    groups:
+      claim: employee_groups
+      prefix: ''
