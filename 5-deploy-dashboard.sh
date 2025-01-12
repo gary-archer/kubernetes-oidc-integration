@@ -20,7 +20,7 @@ helm repo update
 helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
     --namespace dashboard \
     --create-namespace \
-    --set kong.proxy.http.enabled=true
+    --set kong.proxy.http.enabled=true \
     --wait
 if [ $? -ne 0 ]; then
   exit 1

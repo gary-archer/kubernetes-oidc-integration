@@ -129,14 +129,18 @@ Install the Kubernetes dashboard:
 ./5-deploy-dashboard.sh
 ```
 
-Then browse to `https://localhost:8443` and paste in a user assertion to authenticate.\
+Then connect to the dashboard:
+
+curl -i -k https://dashboard.test.example
+
+Then browse to `https://dashboard.test.example` and paste in a user assertion to authenticate.\
 If the JWT is rejected, use the following command to debug:
 
 ```bash
 kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
 ```
 
-### 3. Get a User Assertion
+### 6. Get a User Assertion
 
 Whenever required, quickly get a user level ID token for an employee role using one of these commands:
 
@@ -145,14 +149,34 @@ Whenever required, quickly get a user level ID token for an employee role using 
 ./6-create-user-assertion.sh 'devops'
 ```
 
-### Use Kubectl as a User
+Paste the assertion into the dashboard to login as either user type:
 
-TODO: 
+- DevOps users can view resources from all namespaces.
+- Developer users can only view resources in the `applications` namespace.
 
-- Create a `~/.kube/config` file from an ID token and run kubectl.
-- Limit developers to a single namespace.
+### 7. Run Kubectl as a Restricted User
 
-### 5. Free Resources
+Run as a DevOps user with readonly permissions to all resources:
+
+```bash
+./7-create-kube-config.sh 'developer' > ~/.kube/config-developer
+export KUBECONFIG=~/.kube/config-developer
+```
+
+Run as a developer user with readonly permissions to only the `applications` namespace.:
+
+```bash
+./7-create-kube-config.sh 'devops' > ~/.kube/config-devops
+export KUBECONFIG=~/.kube/config-developer
+```
+
+Then reset to revert to the default `kubernetes-admin` user:
+
+```bash
+export KUBECONFIG=
+```
+
+### 8. Free Resources
 
 When you have finished testing, free resources with this command:
 
