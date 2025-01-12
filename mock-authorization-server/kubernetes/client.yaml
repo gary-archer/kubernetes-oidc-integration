@@ -1,0 +1,13 @@
+######################################################
+# The client is a simple pod from which I can run curl
+######################################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+spec:
+  containers:
+  - name: curl
+    image: curlimages/curl:latest
+    command: ["sleep"]
+    args: ["infinity"]

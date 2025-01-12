@@ -60,7 +60,7 @@ First ensure that these tools are installed:
 Create a KIND cluster:
 
 ```bash
-kind create cluster --name=demo
+./create-cluster.sh
 ```
 
 The default configuration at `~/.kube/config` runs as user `kubernetes-admin` with access to all resources:
@@ -75,9 +75,24 @@ Build and deploy the mock authorization server as a Docker container.\
 If required, run the authorization server locally to understand its code and operations.
 
 ```bash
-./mock-authorization-server/build.sh
-./mock-authorization-server/deploy.sh
+2-deploy-authorization-server.sh
 ```
+
+### Verify Connections
+
+Connect to the client pod:
+
+```bash
+kubectl -n client exec -it curl -- sh
+```
+
+Then call the OpenID Connect endpoints:
+
+```bash
+curl -k https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
+curl -k https://mockauthorizationserver.service.svc:8443/jwks
+```
+
 
 ### Get a User Assertion
 

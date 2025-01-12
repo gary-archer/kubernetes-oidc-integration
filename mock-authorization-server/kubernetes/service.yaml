@@ -1,0 +1,40 @@
+########################################################
+# The mock authorization server is a trivial Node.js API
+########################################################
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mockauthorizationserver
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mockauthorizationserver
+spec:
+  selector:
+    app: mockauthorizationserver
+  ports:
+  - name: https
+    protocol: "TCP"
+    port: 8443
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mockauthorizationserver
+  labels:
+    app: mockauthorizationserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mockauthorizationserver
+  template:
+    metadata:
+      labels:
+        app: mockauthorizationserver
+    spec:
+      serviceAccountName: mockauthorizationserver
+      containers:
+      - name: mockauthorizationserver
+        image: mockauthorizationserver:1.0

@@ -11,8 +11,8 @@ if (!fs.existsSync('crypto/internal-ssl.key')) {
     process.exit(1);
 }
 
-const port = 3000;
-const baseUrl = `https://mockauthorizationserver.identity.svc:${port}`;
+const port = 8443;
+const baseUrl = `https://mockauthorizationserver.service.svc:${port}`;
 const app = express();
 
 const publicKey = JSON.parse(fs.readFileSync('./crypto/token-signing-public.jwk', 'ascii'));

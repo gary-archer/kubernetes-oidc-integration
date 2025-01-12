@@ -7,7 +7,7 @@ kind: AuthenticationConfiguration
 jwt:
 - issuer:
     url: https://login.test.example
-    discoveryURL: https://mockauthorizationserver.identity.svc/.well-known/openid-configuration
+    discoveryURL: https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
     certificateAuthority: "$INTERNAL_CA_CERT"
     audiences:
     - my-client
