@@ -7,7 +7,7 @@ kind: AuthenticationConfiguration
 jwt:
 - issuer:
     url: https://login.test.example
-    certificateAuthority: "$INTERNAL_CA_CERT"
+    certificateAuthority: "$EXTERNAL_CA_CERT"
     audiences:
     - my-client
   claimMappings:

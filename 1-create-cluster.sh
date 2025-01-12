@@ -17,8 +17,8 @@ fi
 #
 # Then create the authentication configuration that references the root CA
 #
-export INTERNAL_CA_CERT="$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ./resources/external-certificates/external-ca.crt)"
-envsubst '$INTERNAL_CA_CERT' < resources/authenticationconfiguration-template.yaml > resources/authenticationconfiguration.yaml
+export EXTERNAL_CA_CERT="$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ./resources/external-certificates/external-ca.crt)"
+envsubst '$EXTERNAL_CA_CERT' < resources/authenticationconfiguration-template.yaml > resources/authenticationconfiguration.yaml
 if [ $? -ne 0 ]; then
   exit 1
 fi
