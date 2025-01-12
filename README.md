@@ -16,12 +16,12 @@ Kubernetes allows you to map a token claim like `employee_groups` to a Kubernete
 
 ```json
 {
-  "sub": "john.doe",
-  "iss": "https://login.example.com",
-  "aud": "kubernetes-client",
-  "employee_groups": ["engineers"],
-  "iat": 1736616585042,
-  "exp": 1737516615.042
+  sub: 'john.doe',
+  iss: 'https://login.test.example',
+  aud: 'my-client',
+  employee_groups: [ 'developers' ],
+  iat: 1736716893055,
+  exp: 1736717823055
 }
 ```
 
