@@ -55,12 +55,12 @@ First ensure that these tools are installed:
 - OpenSSL 3+
 - The envsubst tool
 
-### Create a Local Cluster
+### 1. Create a Local Cluster
 
-Create a KIND cluster:
+Create a KIND cluster that includes OpenID Connect authentication configuration:
 
 ```bash
-./create-cluster.sh
+./1-create-cluster.sh
 ```
 
 The default configuration at `~/.kube/config` runs as user `kubernetes-admin` with access to all resources:
@@ -69,38 +69,42 @@ The default configuration at `~/.kube/config` runs as user `kubernetes-admin` wi
 kubectl get pod -A
 ```
 
-### Deploy the Mock Authorization Server
+### 2. Deploy the Mock Authorization Server
 
 Build and deploy the mock authorization server as a Docker container.\
 If required, run the authorization server locally to understand its code and operations.
 
 ```bash
-2-deploy-authorization-server.sh
+./2-deploy-authorization-server.sh
 ```
 
-### Verify Connections
-
-Connect to the client pod:
+Then connect to the client pod:
 
 ```bash
 kubectl -n client exec -it curl -- sh
 ```
 
-Then call the OpenID Connect endpoints:
+Verify internal SSL by calling the OpenID Connect endpoints:
 
 ```bash
 curl -k https://mockauthorizationserver.service.svc:8443/.well-known/openid-configuration
 curl -k https://mockauthorizationserver.service.svc:8443/jwks
 ```
 
-
-### Get a User Assertion
+### 3. Get a User Assertion
 
 Then get a user level ID token to use with the kubectl tool:
 
 ```bash
-cd mock-authorization-server
-npm run create-user-assertion
+./3-create-user-assertion.sh
+```
+
+### 4. Free Resources
+
+When you have finished testing, free resources with this command:
+
+```bash
+./4-delete-cluster.sh
 ```
 
 ### Run Kubernetes Commands with Restricted Privileges
@@ -116,11 +120,3 @@ Strggling with:
 - Cluster startup with the new authentication-config parameter
 - https://github.com/gardener/gardener/issues/9858
 - Get it working first without the certificateAuthority
-
-### Free Resources
-
-Free resources when finished testing:
-
-```bash
-kind delete cluster --name=demo
-```

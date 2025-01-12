@@ -3,7 +3,7 @@ apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
   extraMounts:
-  - hostPath: ./authenticationconfiguration.yaml
+  - hostPath: ./resources/authenticationconfiguration.yaml
     containerPath: /init/authenticationconfiguration.yaml
 
   kubeadmConfigPatches:
@@ -19,5 +19,4 @@ nodes:
         readOnly: false
         pathType: File
 
-- role: worker
 - role: worker
