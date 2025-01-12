@@ -7,11 +7,6 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# Apply cluster role based access control rules
-#
-kubectl apply -f resources/rbac.yaml
-
-#
 # Install the dashboard using the Helm chart
 #
 echo 'Installing the Kubernetes dashboard ...'

@@ -5,7 +5,7 @@ metadata:
 rules:
 - apiGroups: ['*']
   resources: ['*']
-  verbs: ['get', 'list', 'watch']
+  verbs: ['*']
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -27,7 +27,7 @@ metadata:
 rules:
 - apiGroups: ['*']
   resources: ['*']
-  verbs: ['get', 'list', 'watch']
+  verbs: ['*']
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1

@@ -121,24 +121,18 @@ curl http://mockauthorizationserver.identity.svc:8443/.well-known/openid-configu
 curl http://mockauthorizationserver.identity.svc:8443/jwks
 ```
 
-### 5. Deploy the Kubernetes Dashboard
+### 5. Create Restrict Permissions
 
-Install the Kubernetes dashboard:
-
-```bash
-./5-deploy-dashboard.sh
-```
-
-Then connect to the dashboard:
-
-curl -i -k https://dashboard.test.example
-
-Then browse to `https://dashboard.test.example` and paste in a user assertion to authenticate.\
-If the JWT is rejected, use the following command to debug:
+Run a script to apply role based access control:
 
 ```bash
-kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
+./5-restrict-permissions.sh
 ```
+
+This introduces the following simple rules:
+
+- DevOps users can manage resources from all namespaces.
+- Developer users can only manage resources in the `applications` namespace.
 
 ### 6. Get a User Assertion
 
@@ -149,31 +143,46 @@ Whenever required, quickly get a user level ID token for an employee role using 
 ./6-create-user-assertion.sh 'devops'
 ```
 
-Paste the assertion into the dashboard to login as either user type:
+### 7. Use Restricted Permissions
 
-- DevOps users can view resources from all namespaces.
-- Developer users can only view resources in the `applications` namespace.
-
-### 7. Run Kubectl as a Restricted User
-
-Run as a DevOps user with readonly permissions to all resources:
+Install the Kubernetes dashboard:
 
 ```bash
-./7-create-kube-config.sh 'developer' > ~/.kube/config-developer
-export KUBECONFIG=~/.kube/config-developer
+./5-deploy-dashboard.sh
 ```
 
-Run as a developer user with readonly permissions to only the `applications` namespace.:
+Then browse to `https://dashboard.test.example` and paste in a user assertion to authenticate.
 
 ```bash
-./7-create-kube-config.sh 'devops' > ~/.kube/config-devops
-export KUBECONFIG=~/.kube/config-developer
+curl -i -k https://dashboard.test.example
 ```
 
-Then reset to revert to the default `kubernetes-admin` user:
+To run `kubectl` with reduced privileges, save a cluster configuration to file and `export KUBECONFIG` to point to it:
+
+```yaml
+apiVersion: v1
+kind: Config
+current-context: restricted
+clusters:
+- name: kind-demo
+  cluster:
+    certificate-authority-data: ...
+    server: https://127.0.0.1:38451
+users:
+- name: john.doe
+  user:
+    token: ...
+contexts:
+- name: restricted
+  context:
+    cluster: kind-demo
+    user: john.doe
+```
+
+Use the following command to troubleshoot:
 
 ```bash
-export KUBECONFIG=
+kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
 ```
 
 ### 8. Free Resources

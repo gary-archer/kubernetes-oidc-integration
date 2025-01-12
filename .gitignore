@@ -4,3 +4,4 @@
 download
 node_modules
 authenticationconfiguration.yaml
+kubeconfig
