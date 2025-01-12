@@ -1,7 +1,7 @@
 {
     "name": "mock-authorization-server",
     "version": "1.0.0",
-    "description": "Simulate an authorization server's OAuth and OpenID Connect operations",
+    "description": "Provide endpoints that the Kubernetes API server calls to validate JWTs",
     "author": "Curity",
     "license": "Apache-2.0",
     "type": "module",
