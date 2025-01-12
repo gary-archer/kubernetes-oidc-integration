@@ -1,6 +1,6 @@
 # Kubernetes OpenID Connect User Integration
 
-Kubernetes supports user authentication with [OpenID Connect ID Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
+Kubernetes supports user authentication with [User JWTs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
 This enables various use cases, where you restrict team Kubernetes permissions by user type:
 
 - Locking down access to the `kubectl` tool.
@@ -11,8 +11,8 @@ This enables various use cases, where you restrict team Kubernetes permissions b
 Kubernetes user level access typically represents employees that you organize into groups.\
 Each group can be assigned restricted Kubernetes permissions using role based access control.
 
-Your authorization server can issue ID tokens that Kubernetes treats as user assertions to authenticate users.\
-Kubernetes allows you to map an ID token claim like `employee_groups` to a Kubernetes role:
+Your authorization server can issue user JWTs that Kubernetes treats as user assertions to authenticate users.\
+Kubernetes allows you to map a token claim like `employee_groups` to a Kubernetes role:
 
 ```json
 {
@@ -27,7 +27,7 @@ Kubernetes allows you to map an ID token claim like `employee_groups` to a Kuber
 
 ## Kubernetes Token Validation
 
-The Kubernetes API server requires calls these authorization server endpoints to validate ID tokens:
+The Kubernetes API server requires calls these authorization server endpoints to validate user JWTs:
 
 - An OpenID Connect discovery endpoint that uses TLS.
 - A JWKS URI with the token signing public keys.
@@ -136,7 +136,7 @@ This introduces the following simple rules:
 
 ### 6. Get a User Assertion
 
-Whenever required, quickly get a user level ID token for an employee role using one of these commands:
+Whenever required, quickly get a user level JWT for an employee role using one of these commands:
 
 ```bash
 ./6-create-user-assertion.sh 'developer'

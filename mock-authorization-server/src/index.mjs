@@ -30,7 +30,7 @@ app.get('/.well-known/openid-configuration', (request, response) => {
 });
 
 /*
- * Provide a JWKS URI so that the Kubernetes API server can get token signing public keys to verify ID tokens
+ * Provide a JWKS URI so that the Kubernetes API server can get token signing public keys to verify JWTs
  */
 app.get('/jwks', (request, response) => {
     response.setHeader('content-type', 'application/json');
