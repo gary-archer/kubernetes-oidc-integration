@@ -1,4 +1,4 @@
-# Manage Kubernetes Users with OpenID Connect
+# Kubernetes OpenID Connect User Integration
 
 Kubernetes supports user authentication with [OpenID Connect ID Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
 This enables various use cases, where you restrict team Kubernetes permissions by user type:
