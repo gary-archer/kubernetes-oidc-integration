@@ -148,7 +148,7 @@ Whenever required, quickly get a user level JWT for an employee role using one o
 Install the Kubernetes dashboard:
 
 ```bash
-./5-deploy-dashboard.sh
+./7-deploy-dashboard.sh
 ```
 
 Then browse to `https://dashboard.test.example` and paste in a user assertion to authenticate.
@@ -190,5 +190,5 @@ kubectl -n kube-system logs -f kube-apiserver-demo-control-plane
 When you have finished testing, free resources with this command:
 
 ```bash
-./5-delete-cluster.sh
+./8-delete-cluster.sh
 ```
