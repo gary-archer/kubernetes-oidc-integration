@@ -1,4 +1,4 @@
-# Kubernetes OpenID Connect User Integration
+# OAuth Kubernetes User Integration
 
 Kubernetes supports user authentication with [User JWTs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens).\
 This enables various use cases, where you restrict team Kubernetes permissions by user type:
